@@ -11,7 +11,20 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $with = ['faculty', 'program'];
+    protected $fillable =
+    [
+        'npm',
+        'name',
+        'address',
+        'faculty_id',
+        'program_id',
+        'gender',
+        'birth_place',
+        'birth_date'
+    ];
+
+
+
     // public function certificate(): HasOne
     // {
     //     return $this->hasOne(Certificate::class, 'npm', 'npm');

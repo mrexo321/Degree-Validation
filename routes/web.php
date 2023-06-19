@@ -8,8 +8,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Dashboard\DashboardCertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,15 +42,27 @@ Route::controller(CertificateController::class)->group(function () {
 });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
+    Route::get('/login', 'login')->name('login')->middleware('guest');
     Route::post('/login', 'authenticate')->name('authenticate');
+    Route::post('/logout', 'logout')->name('logout')->middleware('auth');
 });
+
 
 // Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('authenticate');
 
 Route::middleware('auth')->group(function () {
-    Route::controller(DashboardController::class)->group(function () {
-        Route::get('/dashboard', 'index')->name('dashboard');
+    Route::prefix('dashboard')->group(function () {
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('/', 'index')->name('dashboard');
+        });
+        Route::controller(StudentController::class)->group(function () {
+            Route::get('/student', 'index')->name('student.index');
+            Route::post('/student', 'store')->name('student.store');
+        });
+        Route::controller(DashboardCertificateController::class)->group(function () {
+            Route::get('/certificate', 'index')->name('dashboard.certificate.index');
+            Route::post('/certificate', 'store')->name('dashboard.certificate.store');
+        });
     });
 });
 

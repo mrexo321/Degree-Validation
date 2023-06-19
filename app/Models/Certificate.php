@@ -11,13 +11,18 @@ class Certificate extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'certificate_number',
+        'npm'
+    ];
+
     // protected $with = ['student', 'dean', 'rector'];
 
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'npm', 'npm');
     }
-    public function rector()
+    public function rector(): BelongsTo
     {
         return $this->belongsTo(Rector::class);
     }

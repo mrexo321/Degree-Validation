@@ -5,7 +5,7 @@ import MainLayout from "@/Layouts/MainLayout";
 import { Link, useForm } from "@inertiajs/react";
 import FormTitle from "@/Components/FormTitle";
 
-const Homepage = () => {
+const Homepage = (props) => {
     const { data, setData, post, processing, errors } = useForm({
         npm: "",
         certificate: "",
@@ -15,6 +15,7 @@ const Homepage = () => {
         e.preventDefault();
         post(route("certificate.validate"));
     };
+    console.log("props", props);
     return (
         <div className="min-h-full flex flex-col gap-y-4">
             <FormTitle
@@ -76,6 +77,24 @@ const Homepage = () => {
                     </div>
                 </div>
             </form>
+            {props.flash.message && (
+                <div className="alert alert-success fixed bottom-0 w-72 text-gray-900 text-xl font-semibold right-0">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    <span>{props.flash.message}</span>
+                </div>
+            )}
         </div>
     );
 };

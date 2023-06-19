@@ -10,7 +10,7 @@ export default function Certif({ data }) {
         e.preventDefault();
         post(route("exit"));
     };
-    console.log("data", data.leng);
+    console.log("certif_data", data);
 
     const certificateExist = ({ data }) => {
         return (
